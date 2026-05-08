@@ -10,5 +10,7 @@ public class Trip
 
     public string DepartureTime { get; set; } = string.Empty;
 
+    public string ArrivalTime { get; set; } = string.Empty;
+
     public decimal Price { get; set; }
 }

@@ -8,6 +8,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<CityService>();
 builder.Services.AddSingleton<TripService>();
+builder.Services.AddSingleton<JourneyService>();
 
 builder.Services.AddCors(options =>
 {
