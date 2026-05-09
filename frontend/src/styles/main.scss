@@ -16,13 +16,12 @@ h1 {
 }
 
 .app-header {
+  max-width: 900px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  margin: 2rem;
+  margin: 2rem auto;
   padding-bottom: 1rem;
-
   border-bottom: 1px solid #334155;
 }
 
@@ -118,7 +117,7 @@ button:hover {
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.7);
-    display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
