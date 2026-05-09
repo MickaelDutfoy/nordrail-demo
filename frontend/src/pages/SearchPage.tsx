@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Journey } from "../types/journey";
+import JourneyCards from "../components/JourneyCard";
 
 function SearchPage() {
   const [cities, setCities] = useState<string[]>([]);
@@ -8,8 +9,6 @@ function SearchPage() {
   const [toCity, setToCity] = useState("");
 
   const [journeys, setJourneys] = useState<Journey[]>([]);
-
-  const [bookingMessage, setBookingMessage] = useState("");
 
   useEffect(() => {
     const loadCities = async () => {
@@ -36,31 +35,6 @@ function SearchPage() {
     const journeys = await response.json();
 
     setJourneys(journeys);
-  };
-
-  const bookJourney = async (journey: Journey) => {
-    const tripIds = journey.segments.map((segment) => segment.id);
-
-    const response = await fetch("http://localhost:5283/api/bookings", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        tripIds,
-      }),
-    });
-
-    if (!response.ok) {
-      setBookingMessage("Failed to create booking");
-      throw new Error("Failed to create booking");
-    }
-
-    const booking = await response.json();
-
-    setBookingMessage("Journey booked successfully.");
-
-    console.log("Booking created:", booking);
   };
 
   return (
@@ -103,36 +77,7 @@ function SearchPage() {
       </div>
 
       <div className="trip-list">
-        {journeys.map((journey) => (
-          <div key={journey.id} className="trip-card">
-            {journey.segments.map((segment) => (
-              <div key={segment.id} className="trip">
-                <div className="trip-route">
-                  {segment.from} → {segment.to}
-                </div>
-
-                <div className="trip-details">
-                  {segment.departureTime} - {segment.arrivalTime}
-                </div>
-
-                <div className="trip-details">{segment.price} NOK</div>
-              </div>
-            ))}
-
-            <hr />
-
-            <div className="journey-summary">
-              {journey.segmentCount} segment
-              {journey.segmentCount > 1 ? "s" : ""} • {journey.totalDuration} •{" "}
-              {journey.totalPrice} NOK
-            </div>
-
-            <button onClick={() => bookJourney(journey)}>
-              Book this journey
-            </button>
-          </div>
-        ))}
-        {bookingMessage && <p className="success-message">{bookingMessage}</p>}
+        <JourneyCards journeys={journeys} />
       </div>
     </section>
   );

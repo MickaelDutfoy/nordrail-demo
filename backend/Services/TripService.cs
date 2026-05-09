@@ -6,24 +6,59 @@ public class TripService
 {
     private readonly List<Trip> _trips =
     [
-        new Trip { Id = 1, From = "Oslo", To = "Trondheim", DepartureTime = "08:00", ArrivalTime = "14:30", Price = 699 },
-        new Trip { Id = 2, From = "Oslo", To = "Trondheim", DepartureTime = "12:00", ArrivalTime = "18:30", Price = 649 },
-        new Trip { Id = 3, From = "Trondheim", To = "Bodø", DepartureTime = "15:10", ArrivalTime = "23:00", Price = 799 },
-        new Trip { Id = 4, From = "Trondheim", To = "Bodø", DepartureTime = "15:30", ArrivalTime = "23:30", Price = 749 },
+        // Oslo ↔ Trondheim
+        new Trip { Id = 1, From = "Oslo", To = "Trondheim", DepartureTime = "07:00", ArrivalTime = "12:30", Price = 649 },
+        new Trip { Id = 2, From = "Oslo", To = "Trondheim", DepartureTime = "13:00", ArrivalTime = "18:30", Price = 699 },
+        new Trip { Id = 3, From = "Trondheim", To = "Oslo", DepartureTime = "07:00", ArrivalTime = "12:30", Price = 649 },
+        new Trip { Id = 4, From = "Trondheim", To = "Oslo", DepartureTime = "13:00", ArrivalTime = "18:30", Price = 699 },
 
-        new Trip { Id = 5, From = "Oslo", To = "Bergen", DepartureTime = "09:15", ArrivalTime = "16:05", Price = 599 },
-        new Trip { Id = 6, From = "Bergen", To = "Stavanger", DepartureTime = "17:00", ArrivalTime = "20:10", Price = 349 },
-        new Trip { Id = 7, From = "Oslo", To = "Stavanger", DepartureTime = "07:45", ArrivalTime = "15:30", Price = 699 },
+        // Trondheim ↔ Bodø
+        new Trip { Id = 5, From = "Trondheim", To = "Bodø", DepartureTime = "07:30", ArrivalTime = "13:30", Price = 749 },
+        new Trip { Id = 6, From = "Trondheim", To = "Bodø", DepartureTime = "15:00", ArrivalTime = "21:00", Price = 799 },
+        new Trip { Id = 7, From = "Bodø", To = "Trondheim", DepartureTime = "07:30", ArrivalTime = "13:30", Price = 749 },
+        new Trip { Id = 8, From = "Bodø", To = "Trondheim", DepartureTime = "15:00", ArrivalTime = "21:00", Price = 799 },
 
-        new Trip { Id = 8, From = "Trondheim", To = "Ålesund", DepartureTime = "09:30", ArrivalTime = "13:45", Price = 399 },
-        new Trip { Id = 9, From = "Ålesund", To = "Bergen", DepartureTime = "14:30", ArrivalTime = "19:20", Price = 449 },
+        // Bodø ↔ Narvik
+        new Trip { Id = 9, From = "Bodø", To = "Narvik", DepartureTime = "08:00", ArrivalTime = "11:30", Price = 349 },
+        new Trip { Id = 10, From = "Bodø", To = "Narvik", DepartureTime = "14:30", ArrivalTime = "18:00", Price = 399 },
+        new Trip { Id = 11, From = "Narvik", To = "Bodø", DepartureTime = "08:00", ArrivalTime = "11:30", Price = 349 },
+        new Trip { Id = 12, From = "Narvik", To = "Bodø", DepartureTime = "14:30", ArrivalTime = "18:00", Price = 399 },
 
-        new Trip { Id = 10, From = "Bodø", To = "Narvik", DepartureTime = "08:20", ArrivalTime = "12:40", Price = 399 },
-        new Trip { Id = 11, From = "Narvik", To = "Tromsø", DepartureTime = "13:30", ArrivalTime = "17:15", Price = 349 },
+        // Narvik ↔ Tromsø
+        new Trip { Id = 13, From = "Narvik", To = "Tromsø", DepartureTime = "08:30", ArrivalTime = "11:45", Price = 329 },
+        new Trip { Id = 14, From = "Narvik", To = "Tromsø", DepartureTime = "14:00", ArrivalTime = "17:15", Price = 349 },
+        new Trip { Id = 15, From = "Tromsø", To = "Narvik", DepartureTime = "08:30", ArrivalTime = "11:45", Price = 329 },
+        new Trip { Id = 16, From = "Tromsø", To = "Narvik", DepartureTime = "14:00", ArrivalTime = "17:15", Price = 349 },
 
-        new Trip { Id = 12, From = "Trondheim", To = "Tromsø", DepartureTime = "06:45", ArrivalTime = "18:20", Price = 1199 },
-        new Trip { Id = 13, From = "Bergen", To = "Trondheim", DepartureTime = "08:30", ArrivalTime = "15:45", Price = 749 },
-        new Trip { Id = 14, From = "Tromsø", To = "Trondheim", DepartureTime = "09:00", ArrivalTime = "20:30", Price = 1199 }
+        // Oslo ↔ Bergen
+        new Trip { Id = 17, From = "Oslo", To = "Bergen", DepartureTime = "07:30", ArrivalTime = "12:45", Price = 549 },
+        new Trip { Id = 18, From = "Oslo", To = "Bergen", DepartureTime = "13:30", ArrivalTime = "18:45", Price = 599 },
+        new Trip { Id = 19, From = "Bergen", To = "Oslo", DepartureTime = "07:30", ArrivalTime = "12:45", Price = 549 },
+        new Trip { Id = 20, From = "Bergen", To = "Oslo", DepartureTime = "13:30", ArrivalTime = "18:45", Price = 599 },
+
+        // Bergen ↔ Stavanger
+        new Trip { Id = 21, From = "Bergen", To = "Stavanger", DepartureTime = "08:00", ArrivalTime = "10:45", Price = 329 },
+        new Trip { Id = 22, From = "Bergen", To = "Stavanger", DepartureTime = "15:00", ArrivalTime = "17:45", Price = 349 },
+        new Trip { Id = 23, From = "Stavanger", To = "Bergen", DepartureTime = "08:00", ArrivalTime = "10:45", Price = 329 },
+        new Trip { Id = 24, From = "Stavanger", To = "Bergen", DepartureTime = "15:00", ArrivalTime = "17:45", Price = 349 },
+
+        // Oslo ↔ Stavanger
+        new Trip { Id = 25, From = "Oslo", To = "Stavanger", DepartureTime = "08:00", ArrivalTime = "14:30", Price = 649 },
+        new Trip { Id = 26, From = "Oslo", To = "Stavanger", DepartureTime = "12:30", ArrivalTime = "19:00", Price = 699 },
+        new Trip { Id = 27, From = "Stavanger", To = "Oslo", DepartureTime = "08:00", ArrivalTime = "14:30", Price = 649 },
+        new Trip { Id = 28, From = "Stavanger", To = "Oslo", DepartureTime = "12:30", ArrivalTime = "19:00", Price = 699 },
+
+        // Trondheim ↔ Ålesund
+        new Trip { Id = 29, From = "Trondheim", To = "Ålesund", DepartureTime = "07:30", ArrivalTime = "10:45", Price = 369 },
+        new Trip { Id = 30, From = "Trondheim", To = "Ålesund", DepartureTime = "14:00", ArrivalTime = "17:15", Price = 399 },
+        new Trip { Id = 31, From = "Ålesund", To = "Trondheim", DepartureTime = "07:30", ArrivalTime = "10:45", Price = 369 },
+        new Trip { Id = 32, From = "Ålesund", To = "Trondheim", DepartureTime = "14:00", ArrivalTime = "17:15", Price = 399 },
+
+        // Bergen ↔ Ålesund
+        new Trip { Id = 33, From = "Bergen", To = "Ålesund", DepartureTime = "07:30", ArrivalTime = "11:00", Price = 399 },
+        new Trip { Id = 34, From = "Bergen", To = "Ålesund", DepartureTime = "14:00", ArrivalTime = "17:30", Price = 449 },
+        new Trip { Id = 35, From = "Ålesund", To = "Bergen", DepartureTime = "07:30", ArrivalTime = "11:00", Price = 399 },
+        new Trip { Id = 36, From = "Ålesund", To = "Bergen", DepartureTime = "14:00", ArrivalTime = "17:30", Price = 449 },
     ];
 
     public IReadOnlyList<Trip> GetAllTrips()
