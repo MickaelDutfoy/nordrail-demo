@@ -88,6 +88,10 @@ button:hover {
   border-radius: 12px;
 }
 
+.trip {
+  margin-bottom: 8px;
+}
+
 .trip-route {
   font-weight: bold;
   margin-bottom: 0.5rem;
@@ -95,4 +99,10 @@ button:hover {
 
 .trip-details {
   color: #94a3b8;
+}
+
+.journey-summary {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #60a5fa;
 }

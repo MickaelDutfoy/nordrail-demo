@@ -9,6 +9,8 @@ function SearchPage() {
 
   const [journeys, setJourneys] = useState<Journey[]>([]);
 
+  const [bookingMessage, setBookingMessage] = useState("");
+
   useEffect(() => {
     const loadCities = async () => {
       const response = await fetch("http://localhost:5283/api/cities");
@@ -34,6 +36,31 @@ function SearchPage() {
     const journeys = await response.json();
 
     setJourneys(journeys);
+  };
+
+  const bookJourney = async (journey: Journey) => {
+    const tripIds = journey.segments.map((segment) => segment.id);
+
+    const response = await fetch("http://localhost:5283/api/bookings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        tripIds,
+      }),
+    });
+
+    if (!response.ok) {
+      setBookingMessage("Failed to create booking");
+      throw new Error("Failed to create booking");
+    }
+
+    const booking = await response.json();
+
+    setBookingMessage("Journey booked successfully.");
+
+    console.log("Booking created:", booking);
   };
 
   return (
@@ -79,7 +106,7 @@ function SearchPage() {
         {journeys.map((journey) => (
           <div key={journey.id} className="trip-card">
             {journey.segments.map((segment) => (
-              <div key={segment.id}>
+              <div key={segment.id} className="trip">
                 <div className="trip-route">
                   {segment.from} → {segment.to}
                 </div>
@@ -94,9 +121,18 @@ function SearchPage() {
 
             <hr />
 
-            <div className="trip-route">Total: {journey.totalPrice} NOK</div>
+            <div className="journey-summary">
+              {journey.segmentCount} segment
+              {journey.segmentCount > 1 ? "s" : ""} • {journey.totalDuration} •{" "}
+              {journey.totalPrice} NOK
+            </div>
+
+            <button onClick={() => bookJourney(journey)}>
+              Book this journey
+            </button>
           </div>
         ))}
+        {bookingMessage && <p className="success-message">{bookingMessage}</p>}
       </div>
     </section>
   );

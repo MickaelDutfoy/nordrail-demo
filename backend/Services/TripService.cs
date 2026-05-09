@@ -9,7 +9,7 @@ public class TripService
         new Trip { Id = 1, From = "Oslo", To = "Trondheim", DepartureTime = "08:00", ArrivalTime = "14:30", Price = 699 },
         new Trip { Id = 2, From = "Oslo", To = "Trondheim", DepartureTime = "12:00", ArrivalTime = "18:30", Price = 649 },
         new Trip { Id = 3, From = "Trondheim", To = "Bodø", DepartureTime = "15:10", ArrivalTime = "23:00", Price = 799 },
-        new Trip { Id = 4, From = "Trondheim", To = "Bodø", DepartureTime = "19:15", ArrivalTime = "03:20", Price = 749 },
+        new Trip { Id = 4, From = "Trondheim", To = "Bodø", DepartureTime = "15:30", ArrivalTime = "23:30", Price = 749 },
 
         new Trip { Id = 5, From = "Oslo", To = "Bergen", DepartureTime = "09:15", ArrivalTime = "16:05", Price = 599 },
         new Trip { Id = 6, From = "Bergen", To = "Stavanger", DepartureTime = "17:00", ArrivalTime = "20:10", Price = 349 },
@@ -38,5 +38,10 @@ public class TripService
                 trip.From == from &&
                 trip.To == to)
             .ToList();
+    }
+
+    public Trip? GetTripById(int id)
+    {
+        return _trips.FirstOrDefault(trip => trip.Id == id);
     }
 }

@@ -1,8 +1,8 @@
 namespace backend.Models;
 
-public class Journey
+public class Booking
 {
-    public string Id { get; set; } = string.Empty;
+    public int Id { get; set; }
 
     public List<Trip> Segments { get; set; } = [];
 
@@ -10,5 +10,5 @@ public class Journey
 
     public TimeSpan TotalDuration { get; set; }
 
-    public int SegmentCount { get; set; }
+    public DateTime CreatedAt { get; set; }
 }

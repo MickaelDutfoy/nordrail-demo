@@ -29,7 +29,9 @@ public class JourneyService
             {
                 Id = $"direct-{trip.Id}",
                 Segments = [trip],
-                TotalPrice = trip.Price
+                TotalPrice = trip.Price,
+                TotalDuration = CalculateTotalDuration([trip]),
+                SegmentCount = 1
             });
         }
 
@@ -46,23 +48,50 @@ public class JourneyService
 
             foreach (var secondTrip in secondSegments)
             {
+                if (!HasValidConnection(firstTrip, secondTrip))
+                {
+                    continue;
+                }
+
+                var segments = new List<Trip>
+                {
+                    firstTrip,
+                    secondTrip
+                };
+
                 journeys.Add(new Journey
                 {
                     Id = $"connection-{firstTrip.Id}-{secondTrip.Id}",
-
-                    Segments =
-                    [
-                        firstTrip,
-                        secondTrip
-                    ],
-
-                    TotalPrice =
-                        firstTrip.Price +
-                        secondTrip.Price
+                    Segments = segments,
+                    TotalPrice = firstTrip.Price + secondTrip.Price,
+                    TotalDuration = CalculateTotalDuration(segments),
+                    SegmentCount = segments.Count
                 });
             }
         }
 
         return journeys;
+    }
+
+    private bool HasValidConnection(Trip firstTrip, Trip secondTrip)
+    {
+        var firstArrival =
+            TimeSpan.Parse(firstTrip.ArrivalTime);
+
+        var secondDeparture =
+            TimeSpan.Parse(secondTrip.DepartureTime);
+
+        var connectionTime =
+            secondDeparture - firstArrival;
+
+        return connectionTime >= TimeSpan.FromMinutes(20);
+    }
+
+    private TimeSpan CalculateTotalDuration(List<Trip> segments)
+    {
+        var firstDeparture = TimeSpan.Parse(segments.First().DepartureTime);
+        var lastArrival = TimeSpan.Parse(segments.Last().ArrivalTime);
+
+        return lastArrival - firstDeparture;
     }
 }

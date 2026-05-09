@@ -11,4 +11,14 @@ export type Journey = {
   id: string;
   segments: Trip[];
   totalPrice: number;
+  totalDuration: string;
+  segmentCount: number;
+};
+
+export type Booking = {
+  id: number;
+  segments: Trip[];
+  totalPrice: number;
+  totalDuration: string;
+  createdAt: string;
 };
