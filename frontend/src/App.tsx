@@ -32,6 +32,7 @@ function App() {
 
     loadCities();
   }, []);
+  
   return (
     <BrowserRouter>
       <Routes>
