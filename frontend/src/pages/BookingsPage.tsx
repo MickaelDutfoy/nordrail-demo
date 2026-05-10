@@ -6,7 +6,7 @@ function BookingsPage() {
   const [deleteMessage, setDeleteMessage] = useState("");
 
   const loadBookings = async () => {
-    const response = await fetch("http://localhost:5283/api/bookings");
+    const response = await fetch("${import.meta.env.VITE_API_URL}/api/bookings");
 
     if (!response.ok) {
       throw new Error("Failed to load bookings");
@@ -23,7 +23,7 @@ function BookingsPage() {
 
   const deleteBooking = async (bookingId: number) => {
     const response = await fetch(
-      `http://localhost:5283/api/bookings/${bookingId}`,
+      `${import.meta.env.VITE_API_URL}/api/bookings/${bookingId}`,
       {
         method: "DELETE",
       },

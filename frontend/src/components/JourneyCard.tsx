@@ -7,7 +7,7 @@ function JourneyCards({ journeys }: { journeys: Journey[] }) {
   const bookJourney = async (journey: Journey) => {
     const tripIds = journey.segments.map((segment) => segment.id);
 
-    const response = await fetch("http://localhost:5283/api/bookings", {
+    const response = await fetch("${import.meta.env.VITE_API_URL}/api/bookings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

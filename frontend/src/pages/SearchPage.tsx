@@ -14,7 +14,7 @@ function SearchPage() {
 
   useEffect(() => {
     const loadCities = async () => {
-      const response = await fetch("http://localhost:5283/api/cities");
+      const response = await fetch("${import.meta.env.VITE_API_URL}/api/cities");
 
       const cities = await response.json();
 
@@ -31,7 +31,7 @@ function SearchPage() {
 
   const searchTrips = async () => {
     const response = await fetch(
-      `http://localhost:5283/api/journeys?from=${fromCity}&to=${toCity}`,
+      `${import.meta.env.VITE_API_URL}/api/journeys?from=${fromCity}&to=${toCity}`,
     );
 
     const journeys = await response.json();
