@@ -20,8 +20,8 @@ public class JourneyService
         // Direct journeys
         var directTrips = allTrips
             .Where(trip =>
-                trip.From == from &&
-                trip.To == to);
+                trip.FromCity.Name == from &&
+                trip.ToCity.Name == to);
 
         foreach (var trip in directTrips)
         {
@@ -37,14 +37,14 @@ public class JourneyService
 
         // One connection max
         var firstSegments = allTrips
-            .Where(trip => trip.From == from);
+            .Where(trip => trip.FromCity.Name == from);
 
         foreach (var firstTrip in firstSegments)
         {
             var secondSegments = allTrips
                 .Where(trip =>
-                    trip.From == firstTrip.To &&
-                    trip.To == to);
+                    trip.FromCity.Name == firstTrip.ToCity.Name &&
+                    trip.ToCity.Name == to);
 
             foreach (var secondTrip in secondSegments)
             {

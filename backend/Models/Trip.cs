@@ -4,9 +4,11 @@ public class Trip
 {
     public int Id { get; set; }
 
-    public string From { get; set; } = string.Empty;
+    public int FromCityId { get; set; }
+    public City FromCity { get; set; } = null!;
 
-    public string To { get; set; } = string.Empty;
+    public int ToCityId { get; set; }
+    public City ToCity { get; set; } = null!;
 
     public string DepartureTime { get; set; } = string.Empty;
 
