@@ -19,6 +19,8 @@ public class BookingService
             .Include(trip => trip.FromCity)
             .Include(trip => trip.ToCity)
             .Where(trip => request.TripIds.Contains(trip.Id))
+            .ToList()
+            .OrderBy(trip => request.TripIds.IndexOf(trip.Id))
             .ToList();
 
         if (segments.Count != request.TripIds.Count)
