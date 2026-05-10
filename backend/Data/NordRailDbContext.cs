@@ -103,11 +103,11 @@ public class NordRailDbContext : DbContext
             .UsingEntity(journey => journey.ToTable("BookingTrips"));
 
         modelBuilder.Entity<Trip>()
-            .Property(t => t.Price)
+            .Property(trip => trip.Price)
             .HasPrecision(10, 2);
 
         modelBuilder.Entity<Booking>()
-            .Property(b => b.TotalPrice)
+            .Property(booking => booking.TotalPrice)
             .HasPrecision(10, 2);
     }
 }
