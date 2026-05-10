@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: nordrail-backend-hzfxbdb3fsbba6cj
+  AZURE_WEBAPP_NAME: nordrail-backend
   PROJECT_PATH: backend/backend.csproj
   DOTNET_VERSION: '8.0.x'
 
