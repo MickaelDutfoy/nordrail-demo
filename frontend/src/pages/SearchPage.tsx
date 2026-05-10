@@ -41,7 +41,7 @@ function SearchPage({
   if (isDatabaseLoading) {
     return (
       <section>
-        <h1>Bookings</h1>
+        <h1>Search</h1>
         <LoadingPanel />
       </section>
     );
@@ -50,7 +50,6 @@ function SearchPage({
   return (
     <section>
       <h1>Search</h1>
-
       <div className="search-form">
         <div className="field">
           <label htmlFor="from-city">From</label>

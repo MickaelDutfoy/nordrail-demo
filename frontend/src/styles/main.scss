@@ -46,8 +46,8 @@ nav a:hover {
 
 .search-form {
   display: flex;
+  flex-direction: column;
   gap: 1rem;
-  align-items: end;
   margin-bottom: 2rem;
 }
 
