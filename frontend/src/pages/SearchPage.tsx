@@ -14,7 +14,7 @@ function SearchPage() {
 
   useEffect(() => {
     const loadCities = async () => {
-      const response = await fetch("${import.meta.env.VITE_API_URL}/api/cities");
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/cities`);
 
       const cities = await response.json();
 
