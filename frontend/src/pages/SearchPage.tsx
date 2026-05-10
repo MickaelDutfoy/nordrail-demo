@@ -14,7 +14,9 @@ function SearchPage() {
 
   useEffect(() => {
     const loadCities = async () => {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/cities`);
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/cities`,
+      );
 
       const cities = await response.json();
 
@@ -46,49 +48,53 @@ function SearchPage() {
   return (
     <section>
       <h1>Search</h1>
-      <div className="search-form">
-        <div className="field">
-          <label htmlFor="from-city">From</label>
+      {cities.length === 0 ? (
+        <p className="wait-message">Database loading, please wait... 🚂</p>
+      ) : (
+        <div className="search-form">
+          <div className="field">
+            <label htmlFor="from-city">From</label>
 
-          <select
-            id="from-city"
-            value={fromCity}
-            onChange={(event) => setFromCity(event.target.value)}
-          >
-            {cities.map((city) => (
-              <option
-                key={city.id}
-                value={city.name}
-                disabled={toCity === city.name}
-              >
-                {city.name}
-              </option>
-            ))}
-          </select>
+            <select
+              id="from-city"
+              value={fromCity}
+              onChange={(event) => setFromCity(event.target.value)}
+            >
+              {cities.map((city) => (
+                <option
+                  key={city.id}
+                  value={city.name}
+                  disabled={toCity === city.name}
+                >
+                  {city.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="field">
+            <label htmlFor="to-city">To</label>
+
+            <select
+              id="to-city"
+              value={toCity}
+              onChange={(event) => setToCity(event.target.value)}
+            >
+              {cities.map((city) => (
+                <option
+                  key={city.id}
+                  value={city.name}
+                  disabled={fromCity === city.name}
+                >
+                  {city.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <button onClick={searchTrips}>Search</button>
         </div>
-
-        <div className="field">
-          <label htmlFor="to-city">To</label>
-
-          <select
-            id="to-city"
-            value={toCity}
-            onChange={(event) => setToCity(event.target.value)}
-          >
-            {cities.map((city) => (
-              <option
-                key={city.id}
-                value={city.name}
-                disabled={fromCity === city.name}
-              >
-                {city.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <button onClick={searchTrips}>Search</button>
-      </div>
+      )}
 
       {!errorMessage ? (
         <div className="trip-list">
