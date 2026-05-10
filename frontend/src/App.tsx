@@ -22,17 +22,20 @@ function App() {
 
         const data = await response.json();
 
+        if (!Array.isArray(data) || data.length < 2) {
+          throw new Error("Cities data is invalid or incomplete");
+        }
+
         setCities(data);
+        setIsDatabaseLoading(false);
       } catch (error) {
         console.error("Unable to load cities:", error);
-      } finally {
-        setIsDatabaseLoading(false);
       }
     };
 
     loadCities();
   }, []);
-  
+
   return (
     <BrowserRouter>
       <Routes>

@@ -67,17 +67,21 @@ function BookingsPage({ isDatabaseLoading }: { isDatabaseLoading: boolean }) {
               {booking.totalPrice} NOK
             </div>
 
-            {booking.segments.map((segment) => (
-              <div key={segment.id} className="trip">
-                <div className="trip-route">
-                  {segment.fromCity.name} → {segment.toCity.name}
-                </div>
+            {booking.segments
+              .toSorted((a, b) =>
+                a.departureTime.localeCompare(b.departureTime),
+              )
+              .map((segment) => (
+                <div key={segment.id} className="trip">
+                  <div className="trip-route">
+                    {segment.fromCity.name} → {segment.toCity.name}
+                  </div>
 
-                <div className="trip-details">
-                  {segment.departureTime} - {segment.arrivalTime}
+                  <div className="trip-details">
+                    {segment.departureTime} - {segment.arrivalTime}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
 
             <button
               onClick={() => deleteBooking(booking.id)}

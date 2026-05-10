@@ -44,22 +44,40 @@ public class BookingService
 
     public IReadOnlyList<Booking> GetAllBookings()
     {
-        return _context.Bookings
+        var bookings = _context.Bookings
             .Include(booking => booking.Segments)
                 .ThenInclude(segment => segment.FromCity)
             .Include(booking => booking.Segments)
                 .ThenInclude(segment => segment.ToCity)
             .ToList();
+
+        foreach (var booking in bookings)
+        {
+            booking.Segments = booking.Segments
+                .OrderBy(segment => TimeSpan.Parse(segment.DepartureTime))
+                .ToList();
+        }
+
+        return bookings;
     }
 
     public Booking? GetBookingById(int id)
     {
-        return _context.Bookings
+        var booking = _context.Bookings
             .Include(booking => booking.Segments)
                 .ThenInclude(segment => segment.FromCity)
             .Include(booking => booking.Segments)
                 .ThenInclude(segment => segment.ToCity)
             .FirstOrDefault(booking => booking.Id == id);
+
+        if (booking is not null)
+        {
+            booking.Segments = booking.Segments
+                .OrderBy(segment => TimeSpan.Parse(segment.DepartureTime))
+                .ToList();
+        }
+
+        return booking;
     }
 
     public bool DeleteBooking(int id)
