@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import type { Booking } from "../types";
+import LoadingPanel from "../components/LoadingPanel";
 
-function BookingsPage() {
+function BookingsPage({ isDatabaseLoading }: { isDatabaseLoading: boolean }) {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [deleteMessage, setDeleteMessage] = useState("");
 
   const loadBookings = async () => {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/bookings`);
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/bookings`,
+    );
 
     if (!response.ok) {
       throw new Error("Failed to load bookings");
@@ -40,6 +43,15 @@ function BookingsPage() {
 
     setDeleteMessage("Booking deleted.");
   };
+
+  if (isDatabaseLoading) {
+    return (
+      <section>
+        <h1>Bookings</h1>
+        <LoadingPanel />
+      </section>
+    );
+  }
 
   return (
     <section>

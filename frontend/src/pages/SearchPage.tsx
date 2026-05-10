@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import type { City, Journey } from "../types";
 import JourneyCards from "../components/JourneyCard";
+import LoadingPanel from "../components/LoadingPanel";
 
-function SearchPage() {
-  const [cities, setCities] = useState<City[]>([]);
-
+function SearchPage({
+  cities,
+  isDatabaseLoading,
+}: {
+  cities: City[];
+  isDatabaseLoading: boolean;
+}) {
   const [fromCity, setFromCity] = useState("");
   const [toCity, setToCity] = useState("");
 
@@ -13,23 +18,11 @@ function SearchPage() {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    const loadCities = async () => {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/cities`,
-      );
-
-      const cities = await response.json();
-
-      setCities(cities);
-
-      if (cities.length >= 2) {
-        setFromCity(cities[0].name);
-        setToCity(cities[1].name);
-      }
-    };
-
-    loadCities();
-  }, []);
+    if (cities.length >= 2) {
+      setFromCity(cities[0].name);
+      setToCity(cities[1].name);
+    }
+  }, [cities]);
 
   const searchTrips = async () => {
     const response = await fetch(
@@ -48,8 +41,8 @@ function SearchPage() {
   return (
     <section>
       <h1>Search</h1>
-      {cities.length === 0 ? (
-        <p className="wait-message">Database loading, please wait... 🚂</p>
+      {isDatabaseLoading ? (
+        <LoadingPanel />
       ) : (
         <div className="search-form">
           <div className="field">

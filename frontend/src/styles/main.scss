@@ -134,7 +134,56 @@ button:hover {
   align-items: center;
 }
 
+.loading-panel {
+  margin-top: 2rem;
+}
+
 .wait-message {
   font-size: 1.5rem;
-  padding-top: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.75rem;
+}
+
+.cold-start-card {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  max-width: 780px;
+  padding: 1.5rem;
+  border: 1px solid rgba(110, 160, 220, 0.28);
+  border-radius: 18px;
+  background: rgba(40, 75, 120, 0.18);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+.cold-start-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border: 3px solid #3aa0ff;
+  border-radius: 50%;
+  color: #3aa0ff;
+  font-weight: 800;
+  font-size: 1.4rem;
+  font-family: serif;
+}
+
+.cold-start-title {
+  margin: 0 0 0.4rem;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.cold-start-card p {
+  margin: 0.35rem 0;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.coffee-message {
+  margin-top: 1.75rem;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.86);
 }
