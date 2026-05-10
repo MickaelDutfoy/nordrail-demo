@@ -8,10 +8,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<CityService>();
-builder.Services.AddSingleton<TripService>();
-builder.Services.AddSingleton<JourneyService>();
-builder.Services.AddSingleton<BookingService>();
+builder.Services.AddScoped<CityService>();
+builder.Services.AddScoped<TripService>();
+builder.Services.AddScoped<JourneyService>();
+builder.Services.AddScoped<BookingService>();
 
 builder.Services.AddCors(options =>
 {

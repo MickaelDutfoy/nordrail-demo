@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(NordRailDbContext))]
-    partial class NordRailDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260510114452_SeedInitialTrips")]
+    partial class SeedInitialTrips
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace backend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("BookingTrip", b =>
-                {
-                    b.Property<int>("BookingId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SegmentsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BookingId", "SegmentsId");
-
-                    b.HasIndex("SegmentsId");
-
-                    b.ToTable("BookingTrips", (string)null);
-                });
 
             modelBuilder.Entity("backend.Models.Booking", b =>
                 {
@@ -52,8 +40,7 @@ namespace backend.Migrations
                         .HasColumnType("time");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -131,6 +118,9 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("BookingId")
+                        .HasColumnType("int");
+
                     b.Property<string>("DepartureTime")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -139,13 +129,14 @@ namespace backend.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ToCityId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookingId");
 
                     b.HasIndex("FromCityId");
 
@@ -480,23 +471,12 @@ namespace backend.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BookingTrip", b =>
-                {
-                    b.HasOne("backend.Models.Booking", null)
-                        .WithMany()
-                        .HasForeignKey("BookingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("backend.Models.Trip", null)
-                        .WithMany()
-                        .HasForeignKey("SegmentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("backend.Models.Trip", b =>
                 {
+                    b.HasOne("backend.Models.Booking", null)
+                        .WithMany("Segments")
+                        .HasForeignKey("BookingId");
+
                     b.HasOne("backend.Models.City", "FromCity")
                         .WithMany()
                         .HasForeignKey("FromCityId")
@@ -512,6 +492,11 @@ namespace backend.Migrations
                     b.Navigation("FromCity");
 
                     b.Navigation("ToCity");
+                });
+
+            modelBuilder.Entity("backend.Models.Booking", b =>
+                {
+                    b.Navigation("Segments");
                 });
 #pragma warning restore 612, 618
         }

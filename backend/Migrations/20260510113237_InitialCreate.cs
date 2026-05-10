@@ -64,14 +64,12 @@ namespace backend.Migrations
                         name: "FK_Trips_Cities_FromCityId",
                         column: x => x.FromCityId,
                         principalTable: "Cities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Trips_Cities_ToCityId",
                         column: x => x.ToCityId,
                         principalTable: "Cities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

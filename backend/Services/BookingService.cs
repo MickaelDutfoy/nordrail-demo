@@ -1,65 +1,63 @@
+using backend.Data;
 using backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Services;
 
 public class BookingService
 {
-    private readonly TripService _tripService;
+    private readonly NordRailDbContext _context;
 
-    private readonly List<Booking> _bookings = [];
-
-    private int _nextId = 1;
-
-    public BookingService(TripService tripService)
+    public BookingService(NordRailDbContext context)
     {
-        _tripService = tripService;
+        _context = context;
     }
 
     public Booking CreateBooking(CreateBookingRequest request)
     {
-        var segments = request.TripIds
-            .Select(id => _tripService.GetTripById(id))
+        var segments = _context.Trips
+            .Include(trip => trip.FromCity)
+            .Include(trip => trip.ToCity)
+            .Where(trip => request.TripIds.Contains(trip.Id))
             .ToList();
 
-        if (segments.Any(segment => segment is null))
+        if (segments.Count != request.TripIds.Count)
         {
             throw new InvalidOperationException("One or more trips were not found.");
         }
 
-        var validSegments = segments
-            .Select(segment => segment!)
-            .ToList();
-
         var booking = new Booking
         {
-            Id = _nextId++,
-            Segments = validSegments,
-            TotalPrice = validSegments.Sum(segment => segment.Price),
-            TotalDuration = CalculateTotalDuration(validSegments),
+            Segments = segments,
+            TotalPrice = segments.Sum(segment => segment.Price),
+            TotalDuration = CalculateTotalDuration(segments),
             CreatedAt = DateTime.UtcNow
         };
 
-        _bookings.Add(booking);
+        _context.Bookings.Add(booking);
+        _context.SaveChanges();
 
         return booking;
     }
 
     public IReadOnlyList<Booking> GetAllBookings()
     {
-        return _bookings;
-    }
-
-    private TimeSpan CalculateTotalDuration(List<Trip> segments)
-    {
-        var firstDeparture = TimeSpan.Parse(segments.First().DepartureTime);
-        var lastArrival = TimeSpan.Parse(segments.Last().ArrivalTime);
-
-        return lastArrival - firstDeparture;
+        return _context.Bookings
+            .Include(booking => booking.Segments)
+                .ThenInclude(segment => segment.FromCity)
+            .Include(booking => booking.Segments)
+                .ThenInclude(segment => segment.ToCity)
+            .ToList();
     }
 
     public Booking? GetBookingById(int id)
     {
-        return _bookings.FirstOrDefault(booking => booking.Id == id);
+        return _context.Bookings
+            .Include(booking => booking.Segments)
+                .ThenInclude(segment => segment.FromCity)
+            .Include(booking => booking.Segments)
+                .ThenInclude(segment => segment.ToCity)
+            .FirstOrDefault(booking => booking.Id == id);
     }
 
     public bool DeleteBooking(int id)
@@ -71,8 +69,17 @@ public class BookingService
             return false;
         }
 
-        _bookings.Remove(booking);
+        _context.Bookings.Remove(booking);
+        _context.SaveChanges();
 
         return true;
+    }
+
+    private TimeSpan CalculateTotalDuration(List<Trip> segments)
+    {
+        var firstDeparture = TimeSpan.Parse(segments.First().DepartureTime);
+        var lastArrival = TimeSpan.Parse(segments.Last().ArrivalTime);
+
+        return lastArrival - firstDeparture;
     }
 }

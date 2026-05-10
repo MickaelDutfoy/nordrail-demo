@@ -1,21 +1,22 @@
+using backend.Data;
+using backend.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace backend.Services;
 
 public class CityService
 {
-    private readonly List<string> _cities =
-    [
-        "Trondheim",
-        "Oslo",
-        "Bodø",
-        "Bergen",
-        "Narvik",
-        "Tromsø",
-        "Ålesund",
-        "Stavanger"
-    ];
+    private readonly NordRailDbContext _context;
 
-    public IReadOnlyList<string> GetAll()
+    public CityService(NordRailDbContext context)
     {
-        return _cities;
+        _context = context;
+    }
+
+    public IReadOnlyList<City> GetAll()
+    {
+        return _context.Cities
+            .OrderBy(city => city.Name)
+            .ToList();
     }
 }

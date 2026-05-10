@@ -1,3 +1,4 @@
+using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ public class CitiesController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IReadOnlyList<string>> GetCities()
+    public ActionResult<IReadOnlyList<City>> GetCities()
     {
         var cities = _cityService.GetAll();
 

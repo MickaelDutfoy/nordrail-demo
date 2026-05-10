@@ -1,30 +1,31 @@
+using backend.Data;
 using backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Services;
 
 public class TripService
 {
-    private readonly List<Trip> _trips =
-    [
-        new Trip
-        {
-            Id = 1,
-            FromCity = new City { Name = "Oslo" },
-            ToCity = new City { Name = "Trondheim" },
-            DepartureTime = "07:00",
-            ArrivalTime = "12:30",
-            Price = 649
-        }
-    ];
+    private readonly NordRailDbContext _context;
+
+    public TripService(NordRailDbContext context)
+    {
+        _context = context;
+    }
 
     public IReadOnlyList<Trip> GetAllTrips()
     {
-        return _trips;
+        return _context.Trips
+            .Include(trip => trip.FromCity)
+            .Include(trip => trip.ToCity)
+            .ToList();
     }
 
     public IReadOnlyList<Trip> GetTrips(string from, string to)
     {
-        return _trips
+        return _context.Trips
+            .Include(trip => trip.FromCity)
+            .Include(trip => trip.ToCity)
             .Where(trip =>
                 trip.FromCity.Name == from &&
                 trip.ToCity.Name == to)
@@ -33,6 +34,9 @@ public class TripService
 
     public Trip? GetTripById(int id)
     {
-        return _trips.FirstOrDefault(trip => trip.Id == id);
+        return _context.Trips
+            .Include(trip => trip.FromCity)
+            .Include(trip => trip.ToCity)
+            .FirstOrDefault(trip => trip.Id == id);
     }
 }

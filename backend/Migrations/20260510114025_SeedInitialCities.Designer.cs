@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(NordRailDbContext))]
-    [Migration("20260510082113_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260510114025_SeedInitialCities")]
+    partial class SeedInitialCities
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,6 +62,48 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Oslo"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Trondheim"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Bodø"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Narvik"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Tromsø"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Bergen"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Stavanger"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Ålesund"
+                        });
                 });
 
             modelBuilder.Entity("backend.Models.Trip", b =>
@@ -112,13 +154,13 @@ namespace backend.Migrations
                     b.HasOne("backend.Models.City", "FromCity")
                         .WithMany()
                         .HasForeignKey("FromCityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("backend.Models.City", "ToCity")
                         .WithMany()
                         .HasForeignKey("ToCityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("FromCity");

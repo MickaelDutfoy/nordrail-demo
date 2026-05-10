@@ -1,7 +1,12 @@
+export type City = {
+  id: number;
+  name: string;
+}
+
 export type Trip = {
   id: number;
-  from: string;
-  to: string;
+  fromCity: City;
+  toCity: City;
   departureTime: string;
   arrivalTime: string;
   price: number;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Journey } from "../types/journey";
+import type { Journey } from "../types";
 
 function JourneyCards({ journeys }: { journeys: Journey[] }) {
   const [bookingMessage, setBookingMessage] = useState("");
@@ -36,7 +36,7 @@ function JourneyCards({ journeys }: { journeys: Journey[] }) {
           {journey.segments.map((segment) => (
             <div key={segment.id} className="trip">
               <div className="trip-route">
-                {segment.from} → {segment.to}
+                {segment.fromCity.name} → {segment.toCity.name}
               </div>
 
               <div className="trip-details">
@@ -64,7 +64,7 @@ function JourneyCards({ journeys }: { journeys: Journey[] }) {
       {bookingMessage && (
         <div className="overlay" onClick={() => setBookingMessage("")}>
           <div
-            className="success-message"
+            className="modal-message"
             onClick={(event) => event.stopPropagation()}
           ><p>
             {bookingMessage}
