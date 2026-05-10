@@ -16,7 +16,7 @@ NordRail allows users to:
 - view existing bookings
 - cancel bookings
 
-The project is intended as a compact full-stack example rather than a production-ready booking platform.
+The project is intended as a compact full-stack example rather than a production-ready booking platform. Data is obviously fictional. 
 
 ## Tech stack
 
@@ -82,7 +82,7 @@ Frontend:
 https://gray-pebble-0725c0803.7.azurestaticapps.net
 
 Backend API:
-https://nordrail-backend-hzfxbdb3fsbba6cj.swedencentral-01.azurewebsites.net
+https://nordrail-backend-hzfxbdb3fsbba6cj.swedencentral-01.azurewebsites.net/api/health
 
 ## Purpose
 
