@@ -7,12 +7,14 @@ function LoadingPanel() {
         <div className="cold-start-icon">i</div>
 
         <div>
-          <p className="cold-start-title">Database cold start</p>
+          <p className="cold-start-title">Service startup</p>
           <p>
-            The database is waking up after being idle and may take up to a
-            minute to respond.
+            The backend and database are hosted on free-tier Azure services and
+            may take up to a minute to wake up after inactivity.
           </p>
-          <p>This only happens after periods of inactivity on the free plan.</p>
+          <p>
+            The app should continue automatically once the service is ready.
+          </p>
         </div>
       </div>
 
