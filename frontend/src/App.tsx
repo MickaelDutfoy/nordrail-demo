@@ -35,7 +35,7 @@ useEffect(() => {
 
       // trying to fight against Azure DB cold start - please ignore :-)
       if (!isCancelled) {
-        setTimeout(loadCities, 3000);
+        setTimeout(loadCities, 5000);
       }
     }
   };
